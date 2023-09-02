@@ -9,11 +9,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.*;
-import java.util.*;
-
 class WordGenerator
 {
 
@@ -21,9 +18,9 @@ class WordGenerator
 
     WordGenerator()
     {
-        int n = 1 + (int)(Math.random() * ((2314) + 1)); // generates random number to serch word
+        int n = 1 + (int)(Math.random() * ((2314) + 1)); // generates random number to search word
         String line = null;
-        try (Stream<String> lines = Files.lines(Paths.get("src/resources/wordlist.txt"))) //where wordlist dictonary is stored
+        try (Stream<String> lines = Files.lines(Paths.get("src/resources/wordlist.txt"))) //where wordlist dictionary is stored
         {
             line = lines.skip(n).findFirst().get();
         }
@@ -42,7 +39,7 @@ class WordGenerator
 
     public boolean isWord(String word) // checks if string parameter is in our word dictionary
     {
-        String line="";
+        String line;
         File words = new File("src/resources/wordlist.txt");
 
         try {

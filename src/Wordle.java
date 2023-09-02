@@ -104,7 +104,7 @@ public class Wordle implements ActionListener
 
     public int[][] checkWord(String word) // method to check if inputted word is a correct
     {
-        int pos = -1; // setting up method variables and arrays
+        // setting up method variables and arrays
         char[] guess = toCharacterArray(word);
         char[] ans = toCharacterArray(key);
         int[] green = new int[5];
@@ -164,8 +164,7 @@ public class Wordle implements ActionListener
             }
         }
 
-        int[][] colorArray = {green, yellow, white}; //combines the color arrays into a 2step array
-        return colorArray;
+        return new int[][]{green, yellow, white};
 
     }
 
@@ -203,9 +202,9 @@ public class Wordle implements ActionListener
 
     // This function checks if the green array matches the key
     // if so it triggers the gameWin method.
-    // It also checks the turn the player is on, if its been 5 turns
+    // It also checks the turn the player is on, if it's been 5 turns
     // it triggers the gameOver method
-    public void checkWin(int[][] array, String word)
+    public void checkWin(int[][] array)
     {
         int[] test = array[0];
         int[] solution = {1,1,1,1,1};
@@ -215,7 +214,7 @@ public class Wordle implements ActionListener
             gameWin();
         }
 
-        if (turn>4)
+        if (turn>=4)
         {
             gameOver();
         }
@@ -251,7 +250,6 @@ public class Wordle implements ActionListener
     {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        String timeStamp = dateFormat.format(cal.getTime());
         File log = new File("src/resources/log.txt");
 
         try{
@@ -364,82 +362,85 @@ public class Wordle implements ActionListener
         @Override
         public void keyPressed(KeyEvent e)
         {
-
-            int code = e.getKeyCode();
-            if(code>=65 && code<=90) // checks to see if keypress is a usable letter
+            if(running)
             {
-                if(canContinue && running)
+                int code = e.getKeyCode();
+                if(code>=65 && code<=90) // checks to see if keypress is a usable letter
                 {
-                    if(letter<5)
+                    if(canContinue && running)
                     {
-                        System.out.println(Character.toLowerCase((char)code));
-                        words[turn][letter].setText(String.valueOf((char)code).toLowerCase());
-                        letter++;
-                    }
-                    else
-                        canContinue=false;
-                }
-            }
-            else if(code==10) // interprets 'enter' button and submits guess
-            {
-                if (letter == 5)
-                {
-
-                    String word = "";
-                    for (int i = 0; i < 5; i++)
-                    {
-                        word = word + words[turn][i].getText();
-                        word = word.toLowerCase();
-                    }
-
-                    if (new WordGenerator().isWord(word)) // if submission is an english word it applies checkWord/Win method
-                    {
-                        if (!(Arrays.asList(lastGuess).contains(word)))
+                        if(letter<5)
                         {
-                            System.out.println("Guess " + (turn+1) +  " -> " + word);
-                            writeColor(checkWord(word), word);
-                            checkWin(checkWord(word), word);
-                            storeGuess(word, turn);
-                            lastGuess[turn] = word;
+                            System.out.println(Character.toLowerCase((char)code));
+                            words[turn][letter].setText(String.valueOf((char)code).toLowerCase());
+                            letter++;
+                        }
+                        else
+                            canContinue=false;
+                    }
+                }
+                else if(code==10) // interprets 'enter' button and submits guess
+                {
+                    if (letter == 5)
+                    {
 
-                            letter = 0;
-                            turn++;
-                            canContinue = true;
-                            turnLabel.setText((5 - turn) + " Turns Remaining"); // display
+                        String word = "";
+                        for (int i = 0; i < 5; i++)
+                        {
+                            word = word + words[turn][i].getText();
+                            word = word.toLowerCase();
+                        }
+
+                        if (new WordGenerator().isWord(word)) // if submission is an english word it applies checkWord/Win method
+                        {
+                            if (!(Arrays.asList(lastGuess).contains(word)))
+                            {
+                                System.out.println("Guess " + (turn+1) +  " -> " + word);
+                                writeColor(checkWord(word), word);
+                                checkWin(checkWord(word));
+                                storeGuess(word, turn);
+                                lastGuess[turn] = word;
+
+                                letter = 0;
+                                turn++;
+                                canContinue = true;
+                                turnLabel.setText((5 - turn) + " Turns Remaining"); // display
+                            }
+
+                            else
+                            {
+                                info.setForeground(Color.RED); // else cases for display
+                                info.setText("Repeat Word");
+                            }
+
                         }
 
                         else
                         {
                             info.setForeground(Color.RED); // else cases for display
-                            info.setText("Repeat Word");
+                            info.setText("Word Doesn't Exist!");
                         }
-
                     }
 
                     else
                     {
                         info.setForeground(Color.RED); // else cases for display
-                        info.setText("Word Doesn't Exist!");
+                        info.setText("Fill Board");
+                    }
+
+                }
+                else if(code==8) // deletes letter of guess, clears display of letter
+                {
+                    if(letter>0)
+                    {
+                        System.out.println("del");
+                        letter--;
+                        canContinue=true;
+                        words[turn][letter].setText("_");
                     }
                 }
-
-                else
-                {
-                    info.setForeground(Color.RED); // else cases for display
-                    info.setText("Fill Board");
-                }
-
             }
-            else if(code==8) // deletes letter of guess, clears display of letter
-            {
-                if(letter>0)
-                {
-                    System.out.println("del");
-                    letter--;
-                    canContinue=true;
-                    words[turn][letter].setText("_");
-                }
-            }
+
         }
     }
 }

@@ -1,6 +1,0 @@
-2023/08/30 21:36:29
-Win in 1 turns
-----Used Reveal----
-Guess 1 --> borax
-Solution: borax
-

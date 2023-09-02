@@ -1,6 +1,9 @@
 // Joseph Quinn
 // July 18, 2023:
 
+// Wordle java application that allows you to play as many times as you want with randomly generated words.
+// Also contains a larger word archive than the usual wordle for an extra challenge.
+
 //###############
 //INFINITE WORDLE
 //###############

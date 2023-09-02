@@ -215,7 +215,7 @@ public class Wordle implements ActionListener
             gameWin();
         }
 
-        if (turn>=4)
+        if (turn==4 && !win)
         {
             gameOver();
         }

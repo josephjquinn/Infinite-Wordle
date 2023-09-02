@@ -229,7 +229,7 @@ public class Wordle implements ActionListener
 
         System.out.println("#### GAME OVER ####");
         info.setForeground(Color.red);
-        info.setText(("Game Over"));
+        info.setText(("Game Over" + "    Solution: " + key));
         turnLabel.setText("0 Turns Remaining");
         turnLabel.setForeground(Color.blue);
         turnLabel.setText("Solution: " + key);

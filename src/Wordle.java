@@ -21,6 +21,7 @@ public class Wordle implements ActionListener
 
     String key = keys.getRandomString(); // utilizes method from WordGenerator.java to generate random answer for each game
 
+
     JFrame frame = new JFrame();// creating GUI elements
     JPanel game = new JPanel(new GridLayout(5, 5, 10, 10));
     JPanel display = new JPanel();

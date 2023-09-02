@@ -10,7 +10,7 @@ This is a Java program that simulates a game similar to Wordle. In this game, yo
 - Offers the option to play as many rounds as desired.
 - Larger word pool than typical wordle allowing for highest skill ceiling.
 
-<img width="598" alt="wordle" src="https://github.com/josephjquinn/Infinite-Wordle/assets/81782398/d12b3801-3eb3-4b54-bc00-010d66df6fb5">
+<img width="598" alt="wordle" src="wordle.png">
 
 
 
